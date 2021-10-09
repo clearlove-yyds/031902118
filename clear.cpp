@@ -2,21 +2,19 @@
 #include<string>
 #include<fstream>
 using namespace std;
-int main()
+int main(int argc, char* argv[])
 {
 	int i, j, k, l = 0, p = 0, total = 0, ll, lr, intv = 0, q = 0;
 	string org, words, ans, str1, str2;
-	cin >> org;
-	cin >> words;
-	cin >> ans;
-	ofstream out(ans);
-	ifstream in1(org);
+	ofstream out(argv[3]);
+	ifstream in1(argv[2]);
 	if (!in1)
 		out << "org open error!" << endl;
+	out << "          " << endl;
 	while (getline(in1, str1))
 	{
 		l++;
-		ifstream in2(words);
+		ifstream in2(argv[1]);
 		if (!in2)
 			out << "words open error!" << endl;
 		while (getline(in2, str2))
@@ -53,11 +51,12 @@ int main()
 					}
 					if (p)
 					{
+						if (total)
+							out << endl;
 						total++;
-						out << "Line" << l << ":<" << str2 << '>';
+						out << "Line" << l << ": <" << str2 << "> ";
 						for (k = ll;k <= lr;k++)
 							out << str1[k];
-						out << endl;
 						p = 0;
 					}
 				}
@@ -93,19 +92,21 @@ int main()
 					}
 					if (p)
 					{
+						if (total)
+							out << endl;
 						total++;
-						out << "Line" << l << ":<" << str2 << '>';
+						out << "Line" << l << ": <" << str2 << "> ";
 						for (k = ll;k <= lr;k++)
 							out << str1[k];
-						out << endl;
 						p = 0;
 					}
 				}
 		}
 		in2.close();
 	}
-	out << "Total:" << total;
+	out.clear();
+	out.seekp(0, ios::beg);
+	out << "Total: " << total;
 	out.close();
 	return 0;
 }
-
